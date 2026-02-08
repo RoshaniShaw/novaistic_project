@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-[#0f172a] text-white">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | Novaistic</title>
+  <link href="./dist/output.css" rel="stylesheet" />
+</head>
+<body class="font-sans flex flex-col min-h-screen">
+
+  <!-- Header -->
+  <header class="flex justify-between items-center px-6 py-4 bg-[#1e293b]">
+    <a href="index.html" class="font-bold text-xl">Novaistic</a>
+    <nav class="hidden md:flex gap-8">
+      <a href="index.html" class="hover:text-blue-400">Home</a>
+      <a href="chats.html" class="hover:text-blue-400">Chats</a>
+      <a href="#ideas" class="hover:text-blue-400">Ideas</a>
+    </nav>
+    <button onclick="toggleMenu()" class="md:hidden text-2xl">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </header>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="fixed top-0 right-[-100%] h-full w-64 bg-[#1e293b] p-6 transition-all duration-300 z-50">
+    <button onclick="toggleMenu()" class="text-2xl absolute top-4 right-4">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <nav class="flex flex-col gap-6 mt-16">
+      <a href="index.html">Home</a>
+      <a href="chats.html">Chats</a>
+      <a href="#ideas">Ideas</a>
+    </nav>
+  </aside>
+
+  <!-- Main Form -->
+  <main class="flex-grow flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-md bg-[#1e293b] rounded-lg p-8 shadow-lg">
+      <h2 class="text-3xl font-bold mb-4">Welcome back</h2>
+      <p class="mb-6 text-gray-400">
+        Start your website in seconds.
+      </p>
+
+      <div class="space-y-4">
+        <div>
+          <label for="email" class="block mb-1 text-sm">Email</label>
+          <input type="email" id="email" placeholder="name@company.com"
+            class="w-full px-4 py-2 bg-[#0f172a] text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <div>
+          <label for="password" class="block mb-1 text-sm">Password</label>
+          <input type="password" id="password" placeholder="••••••••"
+            class="w-full px-4 py-2 bg-[#0f172a] text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+
+        <div class="flex gap-4">
+          <button id="loginBtn"
+            class="w-1/2 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded font-semibold transition">Login</button>
+          <button id="registerBtn"
+            class="w-1/2 bg-green-600 hover:bg-green-700 text-white py-2 rounded font-semibold transition">Register</button>
+        </div>
+
+        <div class="flex items-center justify-center mt-4">
+          <span class="border-b border-gray-600 w-full"></span>
+          <span class="px-4 text-gray-400">or</span>
+          <span class="border-b border-gray-600 w-full"></span>
+        </div>
+
+        <!-- Google Sign In -->
+        <button id="googleLoginBtn"
+          class="w-full bg-white text-black py-2 rounded font-semibold transition hover:bg-gray-200 flex items-center justify-center gap-2">
+          <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" class="w-5 h-5" />
+          Sign in with Google
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-[#1e293b] text-center text-gray-400 py-4">
+    &copy; 2025 Novaistic. All rights reserved.
+  </footer>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
+    GoogleAuthProvider,
+    signInWithPopup
+  } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "enter_your_apikey_for_firebase",
+    authDomain: "novaistic.firebaseapp.com",
+    projectId: "novaistic",
+    storageBucket: "novaistic.appspot.com",
+    messagingSenderId: "739631024172",
+    appId: "1:739631024172:web:177d2545f629df72082989"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // ✅ Get the ?redirect= param if any, or fallback to home
+  const redirectUrl = new URLSearchParams(window.location.search).get('redirect') || 'index.html';
+
+  // Toggle Sidebar
+  window.toggleMenu = function toggleMenu() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('right-[-100%]');
+    sidebar.classList.toggle('right-0');
+  };
+
+  // ✅ Email/Password Login
+  const loginBtn = document.getElementById("loginBtn");
+  loginBtn.addEventListener("click", async () => {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    if (!email || !password) {
+      alert("Please enter both email and password.");
+      return;
+    }
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      alert("Login successful!");
+      // ✅ Go back to the page user wanted
+      window.location.href = redirectUrl;
+    } catch (error) {
+      alert(error.message);
+    }
+  });
+
+  // ✅ Register — stays on same page, does not redirect yet
+  const registerBtn = document.getElementById("registerBtn");
+  registerBtn.addEventListener("click", async () => {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    if (!email || !password) {
+      alert("Please enter both email and password.");
+      return;
+    }
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      alert("Registration successful! You can now login.");
+      // ✅ Optional: auto-login right away
+      // Or just stay on page and let user click login.
+    } catch (error) {
+      alert(error.message);
+    }
+  });
+
+  // ✅ Google Login
+  const googleLoginBtn = document.getElementById("googleLoginBtn");
+  googleLoginBtn.addEventListener("click", async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+      alert("Google sign-in successful!");
+      // ✅ Go back to intended page
+      window.location.href = redirectUrl;
+    } catch (error) {
+      alert(error.message);
+    }
+  });
+</script>
+
+</body>
+</html>

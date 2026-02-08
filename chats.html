@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-mainbg text-textlight">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Ask and discover real-world public tech problems. Share your issues and find solutions in the community." />
+  <title>Chats | Novaistic</title>
+  <link href="./dist/output.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+</head>
+<body class="font-sans">
+
+<!-- HEADER -->
+<header class="flex justify-between items-center m-4 px-8 py-4 bg-glassbg backdrop-blur-lg rounded-lg sticky top-0 z-10">
+  <a href="index.html" class="font-bold text-xl animate-pulse">Novaistic</a>
+
+  <!-- Mobile Menu Button -->
+  <button onclick="toggleMenu()" class="md:hidden text-2xl" aria-label="Toggle Menu">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+
+  <!-- Navigation Desktop -->
+  <nav class="hidden md:flex gap-12 items-center">
+    <a href="chats.html" class="hover:text-blue-400">CHATS</a>
+    <a href="#ideas" class="hover:text-blue-400">IDEAS</a>
+    <a id="loginLink" href="login.html" class="hover:text-blue-400">SIGNUP/LOGIN</a>
+    <div id="userProfile" class="hidden items-center gap-4">
+      <img id="userPic" class="w-8 h-8 rounded-full" src="" alt="Profile">
+      <span id="userName" class="font-medium"></span>
+      <button id="logoutBtn" class="px-2 py-1 bg-red-500 rounded text-sm">Logout</button>
+    </div>
+  </nav>
+</header>
+
+<!-- Mobile Sidebar -->
+<aside id="sidebar" class="fixed top-0 right-[-100%] h-full w-64 bg-glassbg backdrop-blur-lg p-6 transition-all duration-300 z-50">
+  <button onclick="toggleMenu()" class="text-2xl absolute top-4 right-4">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+  <nav class="flex flex-col gap-6 mt-16">
+    <a href="chats.html">CHATS</a>
+    <a href="#ideas">IDEAS</a>
+    <a id="sidebarLoginLink" href="login.html">SIGNUP/LOGIN</a>
+    <div id="sidebarUserProfile" class="hidden flex-col gap-3 mt-6">
+      <img id="sidebarUserPic" class="w-8 h-8 rounded-full" src="" alt="Profile">
+      <span id="sidebarUserName" class="font-medium"></span>
+      <button id="sidebarLogoutBtn" class="px-2 py-1 bg-red-500 rounded text-sm">Logout</button>
+    </div>
+  </nav>
+</aside>
+
+<!-- Main Content -->
+<main class="p-4 md:p-12 flex flex-col md:flex-row gap-6">
+  <!-- Left Section (Form + Post List) -->
+  <section class="flex-1 flex flex-col gap-6">
+    <!-- Ask Query Box -->
+    <div class="bg-[#291d6e] text-white rounded-xl p-6 shadow-lg">
+      <div class="rounded-xl border border-[#dbeff3] p-6">
+        <h2 class="text-xl mb-4 font-serif">Ask Your Query ?</h2>
+        <input id="problemTitle" type="text" placeholder="Title about your problem"
+          class="w-full p-2 mb-4 border rounded-lg bg-[#3927a0] placeholder-[#cbecf3] font-sans" />
+        <textarea id="problemDesc" placeholder="What problems are you facing? Provide a description of the technical issue you are experiencing"
+          rows="4"
+          class="w-full p-2 border rounded-lg bg-[#3927a0] backdrop-blur-lg placeholder-[#cbecf3] italic"></textarea>
+        <div class="text-right mt-4">
+          <button id="postBtn" class="bg-[#3687f7] text-white font-serif font-semibold px-8 py-2 rounded hover:bg-blue-700">
+            POST
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dynamic Posts Container -->
+    <div id="postsContainer" class="space-y-4"></div>
+  </section>
+ 
+
+  <!-- Right Section (Problem Summary) -->
+  <aside id="problemsSidebar" class="w-full md:w-1/3 bg-[#291d6e] text-white rounded-xl p-6 shadow-lg">
+    <h4 class="text-lg font-semibold mb-2">Some Posted Problems</h4>
+    <p class="text-sm">Will be displayed here with a tag of solved or unsolved mark.</p>
+    <div id="problemsList" class="space-y-4"></div>
+  </aside>
+</main>
+
+<!-- FOOTER -->
+<footer class="flex flex-col items-center gap-8 p-8 bg-glassbg backdrop-blur-lg">
+  <div class="pb-4 text-center">
+    <p class="font-bold text-lg">About Us | Contact | © 2025 novaistic.in</p>
+  </div>
+  <div class="flex flex-col md:flex-row justify-center md:justify-between w-full gap-8 px-4 text-left">
+    <div class="flex-1">
+      <h4 class="font-bold mb-2">About Us</h4>
+      <br>
+      <ul class="font-sans ...">
+        <li>A platform where real problems meet real solutions.</li>
+        <li>Whether you're a student, a developer or</li>
+        <li>a non-technical person — share your challenges,</li>
+        <li>get answers or inspire the next big project idea.</li>
+      </ul>
+      <br>
+      <ul>
+        <li class="font-semibold">Nisha Mallick</li>
+        <li class="font-sans ... hover:text-[#fbfdfd] cursor-pointer text-[#99e8e0]">The Project Manager</li>
+        <li class="font-sans ... hover:text-[#fbfdfd] cursor-pointer text-[#99e8e0]">and Front-end Developer</li>
+      </ul>
+    </div>
+    <div class="flex-1">
+      <h4 class="font-bold mb-2">Team Members</h4>
+      <br>
+      <ul>
+        <li class="font-semibold">Ujjayini Banerjee</li>
+        <li class="font-sans ... hover:text-[#fbfdfd] cursor-pointer text-[#99e8e0]">The Content Strategist and</li>
+        <li class="font-sans ... hover:text-[#fbfdfd] cursor-pointer text-[#99e8e0]">Back-end Developer</li>
+        <br>
+        <li class="mt-2 font-semibold">Roshani Shaw</li>
+        <li class="font-sans ... hover:text-[#fbfdfd] cursor-pointer text-[#99e8e0]">The Content writer and Data</li>
+        <li class="font-sans ... hover:text-[#fbfdfd] cursor-pointer text-[#99e8e0]">Analyst</li>
+        <br>
+        <li class="mt-2 font-semibold">Riya Biswas</li>
+        <li class="font-sans ... hover:text-[#fbfdfd] cursor-pointer text-[#99e8e0]">The Designer and QA</li>
+        <li class="font-sans ... hover:text-[#fbfdfd] cursor-pointer text-[#99e8e0]">Tester</li>
+      </ul>
+    </div>
+    <div class="flex-1">
+      <h4 class="font-bold mb-2">Contact</h4>
+      <br>
+      <ul>
+        <li>Email : <a class="hover:text-[#fbfdfd] cursor-pointer text-[#99e8e0]">novaistic@gmail.com</a></li>
+        <br>
+        <li>Phone :</li>
+      </ul>
+    </div>
+    <div class="flex-1">
+      <h4 class="font-bold mb-2">Quick Links</h4>
+      <br>
+      <a href="index.html" class="block hover:text-[#99e8e0] cursor-pointer">Home</a>
+      <br>
+      <a href="#" class="block hover:text-[#99e8e0] cursor-pointer">Chats</a>
+      <br>
+      <a href="#ideas" class="block hover:text-[#99e8e0] cursor-pointer">Ideas</a>
+    </div>
+  </div>
+</footer>
+
+<script type="module">
+
+// ✅ Gemini helper with key
+// ✅ Gemini helper with key — SHORT, SIMPLE, CLEAR VERSION
+async function getGeminiAnswer(problem) {
+  const API_KEY = "enter_your_apikey"; // ✅ Insert your valid API key here
+  const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-pro:generateContent?key=${API_KEY}`;
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [
+              {
+                text: `You are an expert help bot for non-technical people.
+
+Problem: ${problem}
+
+✅ Give ONE simple solution or next step in plain English.
+✅ Keep the answer UNDER 50 words.
+✅ Use no technical jargon.
+✅ Make it easy to understand for everyone.
+✅ If needed, split into 1–3 short clear steps.
+✅ Do NOT add extra info.`
+              }
+            ]
+          }
+        ]
+      })
+    });
+
+    if (!response.ok) {
+      console.error("Gemini API failed:", response.status, await response.text());
+      return "Sorry, Gemini API failed.";
+    }
+
+    const data = await response.json();
+    console.log("Gemini raw response:", data);
+
+    return (
+      data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+      "Sorry, Gemini could not generate a response."
+    );
+  } catch (err) {
+    console.error("Gemini fetch error:", err);
+    return "Sorry, an error occurred while calling Gemini.";
+  }
+}
+
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp,
+  onSnapshot,
+  query,
+  orderBy,
+  updateDoc,
+  doc
+} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "enter_your_apikey_for_firebase",
+  authDomain: "novaistic.firebaseapp.com",
+  projectId: "novaistic",
+  storageBucket: "novaistic.appspot.com",
+  messagingSenderId: "739631024172",
+  appId: "1:739631024172:web:177d2545f629df72082989"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+window.toggleMenu = function () {
+  const sidebar = document.getElementById('sidebar');
+  sidebar.classList.toggle('right-[-100%]');
+  sidebar.classList.toggle('right-0');
+};
+
+const loginLink = document.getElementById('loginLink');
+const userProfile = document.getElementById('userProfile');
+const userPic = document.getElementById('userPic');
+const userName = document.getElementById('userName');
+const logoutBtn = document.getElementById('logoutBtn');
+
+const sidebarLoginLink = document.getElementById('sidebarLoginLink');
+const sidebarUserProfile = document.getElementById('sidebarUserProfile');
+const sidebarUserPic = document.getElementById('sidebarUserPic');
+const sidebarUserName = document.getElementById('sidebarUserName');
+const sidebarLogoutBtn = document.getElementById('sidebarLogoutBtn');
+
+onAuthStateChanged(auth, user => {
+  if (user) {
+    loginLink.style.display = 'none';
+    userProfile.style.display = 'flex';
+    userPic.src = user.photoURL || 'https://via.placeholder.com/40';
+    userName.textContent = user.displayName || user.email;
+
+    sidebarLoginLink.style.display = 'none';
+    sidebarUserProfile.style.display = 'flex';
+    sidebarUserPic.src = user.photoURL || 'https://via.placeholder.com/40';
+    sidebarUserName.textContent = user.displayName || user.email;
+  } else {
+    loginLink.style.display = 'block';
+    userProfile.style.display = 'none';
+    sidebarLoginLink.style.display = 'block';
+    sidebarUserProfile.style.display = 'none';
+  }
+});
+
+logoutBtn.onclick = () => signOut(auth).then(() => window.location.reload());
+sidebarLogoutBtn.onclick = () => signOut(auth).then(() => window.location.reload());
+
+const titleInput = document.getElementById('problemTitle');
+const descInput = document.getElementById('problemDesc');
+const postBtn = document.getElementById('postBtn');
+const postsContainer = document.getElementById('postsContainer');
+
+postBtn.addEventListener('click', async () => {
+  const user = auth.currentUser;
+  if (!user) {
+    alert('Log in first.');
+    window.location.href = 'login.html?redirect=chats.html';
+    return;
+  }
+
+  const title = titleInput.value.trim();
+  const description = descInput.value.trim();
+
+  if (!title || !description) {
+    alert('Fill both fields.');
+    return;
+  }
+
+  try {
+    const docRef = await addDoc(collection(db, 'problems'), {
+      title,
+      description,
+      timestamp: serverTimestamp(),
+      authorName: user.displayName || user.email,
+      authorPic: user.photoURL || 'https://via.placeholder.com/40',
+      solved: false
+    });
+
+    const aiSolution = await getGeminiAnswer(`${title}: ${description}`);
+    console.log("AI Solution:", aiSolution);
+
+    await addDoc(collection(db, `problems/${docRef.id}/comments`), {
+      comment: aiSolution,
+      authorName: "Novaistic AI Bot",
+      authorPic: "https://png.pngtree.com/png-clipart/20230930/original/pngtree-3d-chat-bot-website-smart-assistant-png-image_13019000.png",
+      timestamp: serverTimestamp()
+    });
+
+    if (!aiSolution.toLowerCase().includes("no known solution")) {
+      await updateDoc(doc(db, 'problems', docRef.id), { solved: true });
+    }
+
+    titleInput.value = '';
+    descInput.value = '';
+    alert('Posted + AI answered!');
+
+  } catch (err) {
+    console.error(err);
+    alert('Failed.');
+  }
+});
+
+const problemsQuery = query(collection(db, 'problems'), orderBy('timestamp', 'desc'));
+
+onSnapshot(problemsQuery, snapshot => {
+  postsContainer.innerHTML = '';
+
+  // ✅ Both side containers
+  const problemsSidebarList = document.getElementById('problemsList');
+  const asideContainer = document.querySelector('aside');
+
+  if (problemsSidebarList) {
+    problemsSidebarList.innerHTML = '';
+  }
+  if (asideContainer) {
+    // Clear only dynamic parts (keep heading)
+    const oldCards = asideContainer.querySelectorAll('.problem-card');
+    oldCards.forEach(card => card.remove());
+  }
+
+  snapshot.forEach(doc => {
+    const data = doc.data();
+    const postEl = document.createElement('div');
+    postEl.className = 'border border-gray-300 rounded-xl p-4 bg-[#291d6e] text-white mb-4';
+
+    const commentBoxId = `commentBox-${doc.id}`;
+    const commentInputId = `commentInput-${doc.id}`;
+    const commentsContainerId = `commentsContainer-${doc.id}`;
+
+    postEl.innerHTML = `
+      <div class="flex items-center mb-2 gap-2">
+        <img src="${data.authorPic}" alt="Profile" class="w-8 h-8 rounded-full">
+        <span class="font-medium">${data.authorName}</span>
+      </div>
+      <h3 class="font-bold mb-2 text-[#caf0f8]">${data.title}</h3>
+      <div class="border rounded p-2 mb-2">${data.description}</div>
+
+      <div class="flex gap-4 text-sm text-gray-300 mb-2">
+        <button class="hover:font-semibold text-[#caf0f8]">LIKE</button>
+        <button class="hover:font-semibold text-[#caf0f8]">SHARE</button>
+        <button class="hover:font-semibold text-[#caf0f8]" onclick="toggleCommentBox('${doc.id}')">COMMENT</button>
+      </div>
+
+      <div id="${commentBoxId}" class="hidden mt-2">
+        <textarea id="${commentInputId}" rows="2" placeholder="Write your comment..." class="w-full p-2 border rounded-lg mb-2 bg-[#3927a0] placeholder-[#cbecf3]"></textarea>
+        <button class="bg-[#3687f7] text-white font-serif px-4 py-2 rounded" onclick="postComment('${doc.id}')">Post Comment</button>
+      </div>
+
+      <div id="${commentsContainerId}" class="mt-4 space-y-2"></div>
+    `;
+
+    postsContainer.appendChild(postEl);
+
+    const commentsContainer = postEl.querySelector(`#${commentsContainerId}`);
+    const commentsQuery = query(collection(db, `problems/${doc.id}/comments`), orderBy('timestamp', 'asc'));
+
+    onSnapshot(commentsQuery, (commentsSnapshot) => {
+      commentsContainer.innerHTML = '';
+      commentsSnapshot.forEach((commentDoc) => {
+        const commentData = commentDoc.data();
+        const commentEl = document.createElement('div');
+        commentEl.className = 'border p-2 rounded bg-[#3927a0]';
+        commentEl.innerHTML = `
+          <div class="flex items-center gap-2 mb-1">
+            <img src="${commentData.authorPic}" alt="Profile" class="w-6 h-6 rounded-full">
+            <span class="text-sm font-medium">${commentData.authorName}</span>
+          </div>
+          <p class="text-sm">${commentData.comment}</p>
+        `;
+        commentsContainer.appendChild(commentEl);
+      });
+    });
+
+    // ✅ Add to right sidebar list
+    if (problemsSidebarList) {
+      const sidebarItem = document.createElement('div');
+      sidebarItem.className = 'border p-2 rounded bg-[#3927a0] text-white mb-2';
+      sidebarItem.innerHTML = `
+        <h3 class="font-bold">${data.title}</h3>
+        <p class="text-xs mb-1">${data.description}</p>
+        <span class="text-xs px-2 py-1 rounded ${data.solved ? 'bg-green-500' : 'bg-red-500'}">
+          ${data.solved ? 'Solved' : 'Unsolved'}
+        </span>
+      `;
+      problemsSidebarList.appendChild(sidebarItem);
+    }
+
+    // ✅ Also add inside <aside>
+    if (asideContainer) {
+      const asideCard = document.createElement('div');
+      asideCard.className = 'problem-card border p-2 rounded bg-[#3927a0] text-white mb-2';
+      asideCard.innerHTML = `
+        <h3 class="font-bold">${data.title}</h3>
+        <p class="text-xs mb-1">${data.description}</p>
+        <span class="text-xs px-2 py-1 rounded ${data.solved ? 'bg-green-500' : 'bg-red-500'}">
+          ${data.solved ? 'Solved' : 'Unsolved'}
+        </span>
+      `;
+      asideContainer.appendChild(asideCard);
+    }
+  });
+});
+
+
+
+window.toggleCommentBox = function (id) {
+  const box = document.getElementById(`commentBox-${id}`);
+  box.classList.toggle('hidden');
+};
+
+window.postComment = async function (problemId) {
+  const user = auth.currentUser;
+  if (!user) {
+    alert('Login first.');
+    window.location.href = 'login.html?redirect=chats.html';
+    return;
+  }
+
+  const commentInput = document.getElementById(`commentInput-${problemId}`);
+  const comment = commentInput.value.trim();
+
+  if (!comment) {
+    alert('Write something.');
+    return;
+  }
+
+  try {
+    await addDoc(collection(db, `problems/${problemId}/comments`), {
+      comment,
+      authorName: user.displayName || user.email,
+      authorPic: user.photoURL || 'https://via.placeholder.com/40',
+      timestamp: serverTimestamp()
+    });
+    commentInput.value = '';
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+</script>
+
+</body>
+</html>

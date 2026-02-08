@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-mainbg text-textlight">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Platform for students and developers to discover real-world tech project ideas based on actual public problem statements." />
+  <title>Real World Project Ideas</title>
+  <link href="./dist/output.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
+</head>
+<body class="font-sans">
+
+<!-- HEADER -->
+<header class="flex justify-between items-center m-4 px-8 py-4 bg-glassbg backdrop-blur-lg rounded-lg sticky top-0 z-10">
+  <div class="font-bold text-xl animate-pulse">Novaistic</div>
+
+  <!-- MENU BUTTON (Mobile) -->
+  <button
+    type="button"
+    class="absolute top-1/2 right-4 -translate-y-1/2 text-2xl text-textlight cursor-pointer z-[2000] bg-glassbg backdrop-blur-md p-2 rounded-md md:hidden"
+    onclick="toggleMenu()"
+    aria-label="Open menu"
+  >
+    <i class="fa-solid fa-bars"></i>
+  </button>
+
+  <!-- NAV (Desktop) -->
+  <nav class="hidden md:flex gap-12 mr-16 items-center">
+    <a href="chats.html" class="font-medium hover:text-[#99e8e0]">Chats</a>
+    <a href="#ideas" class="font-medium hover:text-[#99e8e0]">Ideas</a>
+    <a id="loginLink" href="login.html" class="font-medium hover:text-[#99e8e0]">Login/Sign In</a>
+    <div id="userProfile" class="hidden items-center gap-4">
+      <img id="userPic" class="w-8 h-8 rounded-full" src="" alt="Profile">
+      <span id="userName" class="font-medium"></span>
+      <button id="logoutBtn" class="px-2 py-1 bg-red-500 rounded text-sm">Logout</button>
+    </div>
+  </nav>
+</header>
+
+<!-- SIDEBAR (Mobile menu) -->
+<aside
+  id="sidebar"
+  class="fixed top-0 right-[-100%] w-[250px] h-full bg-glassbg backdrop-blur-lg p-16 pt-20 flex flex-col transition-all duration-300 ease-in-out z-[1500]"
+>
+  <button
+    type="button"
+    class="absolute top-4 right-4 text-3xl cursor-pointer"
+    onclick="toggleMenu()"
+    aria-label="Close menu"
+  >
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+  <a href="chats.html" class="pt-10 mb-6 font-medium hover:text-[#99e8e0]">Chats</a>
+  <a href="#ideas" class="mb-6 font-medium hover:text-[#99e8e0] pt-4">Ideas</a>
+  <a id="sidebarLoginLink" href="login.html" class="font-medium hover:text-[#99e8e0] pt-4">Login/Sign In</a>
+  <div id="sidebarUserProfile" class="hidden flex-col gap-3 mt-6">
+    <img id="sidebarUserPic" class="w-8 h-8 rounded-full" src="" alt="Profile">
+    <span id="sidebarUserName" class="font-medium"></span>
+    <button id="sidebarLogoutBtn" class="px-2 py-1 bg-red-500 rounded text-sm">Logout</button>
+  </div>
+</aside>
+
+<!-- MAIN SECTION -->
+<section class="relative flex justify-center items-center min-h-screen px-8 py-20 m-8 text-center overflow-hidden rounded-2xl">
+  <!-- Blurred background image -->
+  <img src="https://s44783.pcdn.co/in/wp-content/uploads/sites/3/2022/10/Technical-Skills_How-to-Them-Master-in-2022.jpg.optimal.jpg" alt="Background" class="absolute inset-0 w-full h-full object-cover rounded-2xl blur-sm -z-20" />
+
+  <!-- Dark overlay -->
+  <div class="absolute inset-0 bg-black bg-opacity-50 rounded-2xl -z-10"></div>
+
+  <!-- Content -->
+  <div class="relative z-10 max-w-5xl mx-auto">
+    <p class="mb-8 text-lg md:text-xl fade-in font-serif transition duration-300">
+      Here we aim to help new developers and students discover <a class="font-bold">impactful project ideas</a> inspired by real-world problems. But this platform is not just for developers — it is also designed to assist the general public in finding solutions to the <a class="font-bold">technical or practical problems</a> they face in their daily lives.
+    </p>
+    <br>
+    <p class="mb-8 text-lg md:text-xl animate-pulse italic">
+      If a solution is not readily available, these problems are highlighted as real-world problem statements, creating opportunities for students, developers, and innovators to work on meaningful projects that have real-life impact.
+    </p>
+
+    <!-- Cards Container -->
+    <div class="flex flex-col md:flex-row justify-center items-center gap-8 mt-12">
+      <!-- Card 1 -->
+      <div class="flex flex-col items-center text-center pt-8">
+        <i class="fas fa-check-circle text-[#2397fc] text-4xl mb-4 fade-in-scale mr-4"></i>
+        <div class="bg-[#82c1f1] p-6 w-64 rounded-lg transform transition duration-300 hover:scale-110 hover:shadow-xl cursor-pointer mr-4">
+          <p class="text-black text-base break-words">
+            From <a class="font-semibold">technical issues</a> to real-world challenges, we provide <a class="font-semibold">solutions</a> to problems shared by anyone.
+          </p>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="flex flex-col items-center text-center pt-8">
+        <i class="fas fa-comments text-[#f5f8f6] text-4xl mb-4 fade-in-scale mr-4"></i>
+        <div class="bg-[#82c1f1] p-6 w-64 rounded-lg transform transition duration-300 hover:scale-110 hover:shadow-xl cursor-pointer mr-4">
+          <p class="text-black text-base break-words">
+            Contribute your <a class="font-semibold">ideas or solutions</a> to help others and <a class="font-semibold">better display</a>, even on mobile screens.
+          </p>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="flex flex-col items-center text-center pt-8">
+        <i class="fas fa-lightbulb text-[#c9c62e] text-4xl mb-4 fade-in-scale"></i>
+        <div class="bg-[#82c1f1] p-6 w-64 rounded-lg transform transition duration-300 hover:scale-110 hover:shadow-xl cursor-pointer">
+          <p class="text-black text-base break-words">
+            Turning the <a class="font-semibold">real world problems</a> and public-submitted challenges into impactful <a class="font-semibold">project ideas.</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Button aligned right BELOW cards -->
+    <div class="flex justify-end mt-24">
+      <a href="/your-target-page.html">
+        <button
+          type="button"
+          class="px-12 py-4 bg-accent text-mainbg font-semibold rounded-2xl hover:bg-gray-200 transition hover:animate-pulse"
+        >
+          Get Started
+        </button>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="flex flex-col items-center gap-8 p-8 bg-glassbg backdrop-blur-lg">
+  <div class="pb-4 text-center">
+    <p class="font-bold text-lg">About Us | Contact | © 2025 novaistic.in</p>
+  </div>
+  <div class="flex flex-col md:flex-row justify-center md:justify-between w-full gap-8 px-4 text-left">
+    <div class="flex-1">
+      <h4 class="font-bold mb-2">About Us</h4>
+      <br>
+      <ul class="font-sans ...">
+        <li>A platform where real problems meet real solutions.</li>
+        <li>Whether you're a student, a developer or</li>
+        <li>a non-technical person — share your challenges,</li>
+        <li>get answers or inspire the next big project idea.</li>
+      </ul>
+      <br>
+      <ul>
+        <li class="font-semibold">Nisha Mallick</li>
+        <li class="font-sans ... hover:text-[#fbfdfd] cursor-pointer text-[#99e8e0]">The Project Manager</li>
+        <li class="font-sans ... hover:text-[#fbfdfd] cursor-pointer text-[#99e8e0]">and Front-end Developer</li>
+      </ul>
+    </div>
+    <div class="flex-1">
+      <h4 class="font-bold mb-2">Team Members</h4>
+      <br>
+      <ul>
+        <li class="font-semibold">Ujjayini Banerjee</li>
+        <li class="font-sans ... hover:text-[#fbfdfd] cursor-pointer text-[#99e8e0]">The Content Strategist and</li>
+        <li class="font-sans ... hover:text-[#fbfdfd] cursor-pointer text-[#99e8e0]">Back-end Developer</li>
+        <br>
+        <li class="mt-2 font-semibold">Roshani Shaw</li>
+        <li class="font-sans ... hover:text-[#fbfdfd] cursor-pointer text-[#99e8e0]">The Content writer and Data</li>
+        <li class="font-sans ... hover:text-[#fbfdfd] cursor-pointer text-[#99e8e0]">Analyst</li>
+        <br>
+        <li class="mt-2 font-semibold">Riya Biswas</li>
+        <li class="font-sans ... hover:text-[#fbfdfd] cursor-pointer text-[#99e8e0]">The Designer and QA</li>
+        <li class="font-sans ... hover:text-[#fbfdfd] cursor-pointer text-[#99e8e0]">Tester</li>
+      </ul>
+    </div>
+    <div class="flex-1">
+      <h4 class="font-bold mb-2">Contact</h4>
+      <br>
+      <ul>
+        <li>Email : <a class="hover:text-[#fbfdfd] cursor-pointer text-[#99e8e0]">novaistic@gmail.com</a></li>
+        <br>
+        <li>Phone :</li>
+      </ul>
+    </div>
+    <div class="flex-1">
+      <h4 class="font-bold mb-2">Quick Links</h4>
+      <br>
+      <a href="#" class="block hover:text-[#99e8e0] cursor-pointer">Home</a>
+      <br>
+      <a href="#chats" class="block hover:text-[#99e8e0] cursor-pointer">Chats</a>
+      <br>
+      <a href="#ideas" class="block hover:text-[#99e8e0] cursor-pointer">Ideas</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Firebase SDK + Auth Logic -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "enter_your_apikey_for_firebase",
+    authDomain: "novaistic.firebaseapp.com",
+    projectId: "novaistic",
+    storageBucket: "novaistic.appspot.com",
+    messagingSenderId: "739631024172",
+    appId: "1:739631024172:web:177d2545f629df72082989"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  window.toggleMenu = function toggleMenu() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('right-[-100%]');
+    sidebar.classList.toggle('right-0');
+  };
+
+  const loginLink = document.getElementById('loginLink');
+  const userProfile = document.getElementById('userProfile');
+  const userPic = document.getElementById('userPic');
+  const userName = document.getElementById('userName');
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  const sidebarLoginLink = document.getElementById('sidebarLoginLink');
+  const sidebarUserProfile = document.getElementById('sidebarUserProfile');
+  const sidebarUserPic = document.getElementById('sidebarUserPic');
+  const sidebarUserName = document.getElementById('sidebarUserName');
+  const sidebarLogoutBtn = document.getElementById('sidebarLogoutBtn');
+
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      loginLink.style.display = 'none';
+      userProfile.style.display = 'flex';
+      userPic.src = user.photoURL || 'https://via.placeholder.com/40';
+      userName.textContent = user.displayName || user.email;
+
+      sidebarLoginLink.style.display = 'none';
+      sidebarUserProfile.style.display = 'flex';
+      sidebarUserPic.src = user.photoURL || 'https://via.placeholder.com/40';
+      sidebarUserName.textContent = user.displayName || user.email;
+    } else {
+      loginLink.style.display = 'block';
+      userProfile.style.display = 'none';
+      sidebarLoginLink.style.display = 'block';
+      sidebarUserProfile.style.display = 'none';
+    }
+  });
+
+  logoutBtn.onclick = () => signOut(auth).then(() => window.location.reload());
+  sidebarLogoutBtn.onclick = () => signOut(auth).then(() => window.location.reload());
+</script>
+</body>
+</html>
